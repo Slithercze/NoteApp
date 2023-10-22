@@ -1,0 +1,65 @@
+*{
+    padding: 0;
+    margin: 0;
+box-sizing: border-box;
+}
+nav ul{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px;
+    list-style: none;
+}
+nav li{
+    width: 20%;
+    padding: 5px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.wrapper{
+    width: 81%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+.note{
+    border: 1px solid black;
+    padding: 20px 30px;
+    margin: 10px;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+}
+.listecek{
+    list-style: none;
+    margin-bottom: 30px;
+}
+.listecek li::before{
+    content: "😱 ";
+}
+.note h3{
+    position: relative;
+    right: 20px;
+    margin-bottom: 20px;
+    
+}
+button{
+    border-radius: 10px;
+    border: 1px solid black;
+    background: none;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+.displaynone{
+    display: none;
+}

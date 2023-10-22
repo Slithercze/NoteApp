@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li class="all">ALL</li>
+            <li class="shopping-list">Shopping lists</li>
+            <li class="reminder">Reminders</li>
+            <li class="motivationals">Motivationals</li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <div class="wrapper">
+
+        <div class="note displaynone">
+            <h3>To buy in aldi</h3>
+            <ul class="listecek">
+            </ul>
+            <button>Remove</button>
+        </div>
+
+    </div>
+</main>
+<script>
+    //main page
+    fetch("http://localhost:8080/api/notes")
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            data.forEach(note => {
+                const clone = document.querySelector(".note").cloneNode(true);
+                clone.querySelector("h3").textContent = note.title;
+                note.content.split("\n").forEach(item => {
+                    const li = document.createElement("li");
+                    li.textContent = item;
+                    clone.querySelector("ul").appendChild(li);
+                })
+                clone.querySelector("button").addEventListener("click", () => {
+                    fetch(`http://localhost:8080/api/notes/${note.id}`, {
+                        method: "DELETE"
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            document.querySelector(".wrapper").removeChild(clone);
+                        })
+                })
+                clone.classList.remove("displaynone");
+                document.querySelector(".wrapper").appendChild(clone);
+            })
+        })
+
+    //redirects to main page
+    document.querySelector(".all").addEventListener("click", (e) => {
+        location.href = "http://localhost:8080/notes-main.html";
+    });
+    //shows shopping lists
+    document.querySelector(".shopping-list").addEventListener("click", (e) => {
+        document.querySelector(".wrapper").innerHTML = "";
+        fetch(`http://localhost:8080/api/notes?type=shopping%20list`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(item => {
+                    const note = document.createElement("div");
+                    note.classList.add("note");
+                    const h3 = document.createElement("h3");
+                    h3.textContent = item.title;
+                    const ul = document.createElement("ul");
+                    ul.classList.add("listecek");
+                    item.content.split("\n").forEach(item => {
+                        const li = document.createElement("li");
+                        li.textContent = item;
+                        ul.appendChild(li);
+                    })
+                    const button = document.createElement("button");
+                    button.textContent = "Remove";
+                    button.addEventListener("click", () => {
+                        fetch(`http://localhost:8080/api/notes/${item.id}`, {
+                            method: "DELETE"
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data);
+                                document.querySelector(".wrapper").removeChild(note);
+                            })
+                    })
+                    note.appendChild(h3);
+                    note.appendChild(ul);
+                    note.appendChild(button);
+
+                    document.querySelector(".wrapper").appendChild(note);
+                })
+
+            })
+    })
+    //shows reminders list
+    document.querySelector(".reminder").addEventListener("click", (e) => {
+        document.querySelector(".wrapper").innerHTML = "";
+        fetch(`http://localhost:8080/api/notes?type=reminder`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                data.forEach(item => {
+                    const note = document.createElement("div");
+                    note.classList.add("note");
+                    const h3 = document.createElement("h3");
+                    h3.textContent = item.title;
+                    const ul = document.createElement("ul");
+                    ul.classList.add("listecek");
+                    item.content.split("\n").forEach(item => {
+                        const li = document.createElement("li");
+                        li.textContent = item;
+                        ul.appendChild(li);
+                    })
+                    const button = document.createElement("button");
+                    button.textContent = "Remove";
+                    button.addEventListener("click", () => {
+                        fetch(`http://localhost:8080/api/notes/${item.id}`, {
+                            method: "DELETE"
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data);
+                                document.querySelector(".wrapper").removeChild(note);
+                            })
+                    })
+                    note.appendChild(h3);
+                    note.appendChild(ul);
+                    note.appendChild(button);
+
+                    document.querySelector(".wrapper").appendChild(note);
+                })
+
+            })
+    })
+    //shows motivationals list
+    document.querySelector(".motivationals").addEventListener("click", (e) => {
+        document.querySelector(".wrapper").innerHTML = "";
+        fetch(`http://localhost:8080/api/notes?type=motivational`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                data.forEach(item => {
+                    const note = document.createElement("div");
+                    note.classList.add("note");
+                    const h3 = document.createElement("h3");
+                    h3.textContent = item.title;
+                    const ul = document.createElement("ul");
+                    ul.classList.add("listecek");
+                    item.content.split("\n").forEach(item => {
+                        const li = document.createElement("li");
+                        li.textContent = item;
+                        ul.appendChild(li);
+                    })
+                    const button = document.createElement("button");
+                    button.textContent = "Remove";
+                    button.addEventListener("click", () => {
+                        fetch(`http://localhost:8080/api/notes/${item.id}`, {
+                            method: "DELETE"
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data);
+                                document.querySelector(".wrapper").removeChild(note);
+                            })
+                    })
+                    note.appendChild(h3);
+                    note.appendChild(ul);
+                    note.appendChild(button);
+
+                    document.querySelector(".wrapper").appendChild(note);
+                })
+
+            })
+    })
+
+    // function all() {
+    //     //remove notes until there is only one left
+    //     while (document.querySelectorAll(".note").length > 1) {
+    //         document.querySelector(".wrapper").removeChild(document.querySelector(".note"));
+    //     }
+
+
+</script>
+</body>
+</html>

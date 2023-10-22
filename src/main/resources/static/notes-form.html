@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Create a Note</h1>
+<form>
+    <label>
+        Title
+        <br>
+        <input type="text" name="title">
+    </label>
+    <br>
+    <label>
+        Content
+        <br>
+        <textarea name="content"></textarea>
+    </label>
+    <br>
+    <label>
+        Type
+        <br>
+        <select name="type">
+            <option>shopping list</option>
+            <option>reminder</option>
+            <option>motivational</option>
+        </select>
+    </label>
+    <button>Save</button>
+</form>
+<p></p>
+<script>
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const dataEntries = Object.fromEntries(formData);
+        console.log(dataEntries);
+
+        document.querySelector("p").textContent = "New note was saved.";
+        setTimeout(() => {
+            document.querySelector("p").textContent = "";
+        }, 3000);
+
+
+        fetch("http://localhost:8080/api/note", {
+            method: 'POST',
+            headers: {
+                'Content-Type': "application/json"
+            },
+            body: JSON.stringify(dataEntries)
+        })
+            .then(response => response.json())
+            .then(data => console.log(data))
+    })
+
+
+</script>
+</body>
+</html>
